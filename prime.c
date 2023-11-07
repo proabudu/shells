@@ -1,11 +1,29 @@
 #include "prime.h"
 
+/**
+ * p_ctrlc - Handles the SIGINT signal (Ctrl+C) to prevent termination
+ * @p_si: Signal number (unused)
+ *
+ * Description: Prints a new line and prompts the user for input.
+ */
+
 void p_ctrlc(int p_si)
 {
     (void)p_si;
     printf("\n$ ");
     fflush(stdout);
 }
+
+/**
+ * parse_command - Parses the input command line into individual arguments
+ * @line: The input command line string
+ *
+ * Return: An array of strings containing individual arguments.
+ *         NULL on failure.
+ *
+ * Description: Tokenizes the input line using space as the delimiter.
+ *              Allocates memory for arguments and copies tokens.
+ */
 
 char **parse_command(char *line)
 {
@@ -34,6 +52,14 @@ char **parse_command(char *line)
     return args;
 }
 
+/**
+ * execute_command - Executes the given command with arguments
+ * @args: An array of strings containing the command and its arguments
+ *
+ * Description: Forks a child process to execute the specified command.
+ *              Handles command execution and error messages.
+ */
+
 void execute_command(char **args)
 {
     pid_t pid;
@@ -52,6 +78,13 @@ void execute_command(char **args)
         waitpid(pid, &status, 0);
     }
 }
+
+/**
+ * main - Entry point of the shell program
+ * Return: Always returns 0
+ *
+ * Description: Displays a prompt, reads user input, parses and executes commands.
+ */
 
 int main(void)
 {
