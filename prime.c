@@ -94,9 +94,10 @@ void built_in_exit(void)
  */
 void built_in_env(void)
 {
-    extern char **environ;
-    for (char **env = environ; *env != NULL; env++) {
+   char **env = environ;
+    while (*env != NULL) {
         printf("%s\n", *env);
+        env++;
     }
 }
 
