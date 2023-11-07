@@ -6,7 +6,6 @@
  *
  * Description: Prints a new line and prompts the user for input.
  */
-
 void p_ctrlc(int p_si)
 {
     (void)p_si;
@@ -24,10 +23,9 @@ void p_ctrlc(int p_si)
  * Description: Tokenizes the input line using space as the delimiter.
  *              Allocates memory for arguments and copies tokens.
  */
-
 char **parse_command(char *line)
 {
-    char **args = NULL;
+     char **args = NULL;
     char *token = NULL;
     size_t p = 0;
 
@@ -59,7 +57,6 @@ char **parse_command(char *line)
  * Description: Forks a child process to execute the specified command.
  *              Handles command execution and error messages.
  */
-
 void execute_command(char **args)
 {
     pid_t pid;
@@ -80,17 +77,41 @@ void execute_command(char **args)
 }
 
 /**
+ * built_in_exit - Handles the built-in 'exit' command
+ *
+ * Description: Exits the shell.
+ */
+void built_in_exit(void)
+{
+    printf("Exiting shell\n");
+    exit(EXIT_SUCCESS);
+}
+
+/**
+ * built_in_env - Handles the built-in 'env' command
+ *
+ * Description: Prints the current environment variables.
+ */
+void built_in_env(void)
+{
+    extern char **environ;
+    for (char **env = environ; *env != NULL; env++) {
+        printf("%s\n", *env);
+    }
+}
+
+/**
  * main - Entry point of the shell program
  * Return: Always returns 0
  *
  * Description: Displays a prompt, reads user input, parses and executes commands.
  */
-
 int main(void)
 {
     char *line = NULL;
     size_t linesize = 0;
     ssize_t read_bytes;
+    char **args;
 
     signal(SIGINT, p_ctrlc);
 
@@ -119,10 +140,16 @@ int main(void)
 
         if (line[0] != '\0')
         {
-            char **args = parse_command(line);
+            args = parse_command(line);
             if (args)
             {
-                execute_command(args);
+                if (strcmp(args[0], "exit") == 0) {
+                    built_in_exit();
+                } else if (strcmp(args[0], "env") == 0) {
+                    built_in_env();
+                } else {
+                    execute_command(args);
+                }
                 free(args);
             }
         }
