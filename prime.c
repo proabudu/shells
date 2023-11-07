@@ -1,4 +1,5 @@
 #include "prime.h"
+extern char **environ;
 
 /**
  * p_ctrlc - Handles the SIGINT signal (Ctrl+C) to prevent termination
