@@ -1,5 +1,5 @@
-#ifndef PRIME_H
-#define PRIME_H
+#ifndef SHELL_PRIME_H
+#define SHELL_PRIME_H
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -12,4 +12,4 @@ void p_ctrlc(int p_si);
 char **parse_command(char *line);
 void execute_command(char **args);
 
-#endif /* PRIME_H */
+#endif /* SHELL_PRIME_H */
