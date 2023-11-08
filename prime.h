@@ -17,6 +17,9 @@ void p_exec(char **p_args);
 void p_env(void);
 void p_exit(void);
 void p_line_error(int p_read_bytes, char *p_line);
+void parse_command(char *input, char **args, int *num_args);
+void handle_exit(char **args);
+
 
 extern char **environ;
 
