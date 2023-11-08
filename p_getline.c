@@ -1,9 +1,8 @@
 #include "prime.h"
 
-
 static char buffer[BUFFER_SIZE];
 static size_t buffer_index = 0;
-static ssize_t chars_read = 0;
+static size_t chars_read = 0;
 
 char *custom_getline(void) {
     size_t i = 0;
@@ -14,11 +13,18 @@ char *custom_getline(void) {
         if (buffer_index >= chars_read) {
             buffer_index = 0;
             chars_read = read(STDIN_FILENO, buffer, BUFFER_SIZE);
-            if (chars_read <= 0) {
+            if (chars_read == 0) {
                 if (line) {
                     free(line);
                 }
-                return NULL;  /* End of file or error */
+                return NULL;  /* End of file */
+            }
+            else if (chars_read == (size_t)-1) {
+                perror("read");
+                if (line) {
+                    free(line);
+                }
+                exit(EXIT_FAILURE);  /* Error reading from input */
             }
         }
 
@@ -35,7 +41,8 @@ char *custom_getline(void) {
         if (newline_found) {
             line = malloc(i + 1);
             if (line == NULL) {
-                return NULL; /* Allocation error */
+                perror("malloc");
+                exit(EXIT_FAILURE);  /* Allocation error */
             }
             strncpy(line, buffer + buffer_index - i - 1, i);
             line[i] = '\0';
