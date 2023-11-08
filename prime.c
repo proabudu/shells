@@ -1,6 +1,26 @@
 #include "prime.h"
 
 /**
+ * free_parsed_args - Frees memory allocated for parsed arguments and the array.
+ * @p_args: Pointer to the array of parsed arguments.
+ *
+ * Description:
+ *   This function deallocates the memory allocated for individual arguments
+ *   within the p_args array and then frees the p_args array itself.
+ */
+void free_parsed_args(char **p_args) 
+{
+    size_t i;
+
+    for (i = 0; p_args[i] != NULL; i++)
+    {
+        free(p_args[i]);
+    }
+    free(p_args);
+}
+
+
+/**
  * main - Entry point of the shell program
  * Return: Always returns 0
  * Description: Displays a prompt, reads user input,
@@ -29,8 +49,8 @@ int main(void)
 				else if (strcmp(p_args[0], "env") == 0)
 					p_env();
 				else
-					p_exec(p_args);
-				free(p_args);
+					p_exec(p_args);	
+				free_parsed_args(p_args);
 			}
 		}
 		free(p_line);
