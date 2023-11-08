@@ -30,6 +30,7 @@ char **parse_cmd(char *p_line)
 			exit(EXIT_FAILURE);
 		}
 		p_token = strtok(NULL, " ");
+		free(str);
 		p++;
 	}
 	p_args[p] = NULL;
