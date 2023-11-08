@@ -1,6 +1,8 @@
 #ifndef SHELL_PRIME_H
 #define SHELL_PRIME_H
 
+#define BUFFER_SIZE 1024
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
