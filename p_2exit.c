@@ -1,14 +1,15 @@
 #include "prime.h"
 
-void handle_exit(char **args) {
+/**
+ * handle_exit - Used to handle exit with params
+ * @args: Should contain only [0] => `exit`
+ *        and [1] => `<the exit code>`
+ */
+void handle_exit(char **args)
+{
     int status = 0;
-    
-    /* Check if there is an argument for exit status */
-    if (args[1] != NULL) {
-        /* Convert the status argument to an integer */
+
+    if (args[1] != NULL)
         status = atoi(args[1]);
-    }
-    
-    /* Exit the shell with the specified status  code */
     exit(status);
 }
