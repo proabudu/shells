@@ -31,3 +31,13 @@ char *_strtok(char *str, char *delim)
         {
                 free(newstr);
                 return (NULL);
+        }
+	while (o < n)
+	{
+		remaining[o] = str[j + 1];
+		j++;
+		o++;
+	}
+	remaining[o] = '\0';
+	return(newstr);
+}
